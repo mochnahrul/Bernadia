@@ -1,0 +1,65 @@
+{% extends 'components/public/base.html' %} {% set active_page = 'tour_recommendation' %} {% block content %}
+<!-- Page Wrapper -->
+<div class="page-wrapper d-flex bg-body-tertiary min-vh-100">
+  <div class="container my-auto">
+    <div class="row justify-content-center align-items-center pt-6rem pb-5">
+      <div class="col-lg-10">
+        <div class="card shadow rounded-3">
+          <div class="card-body d-flex flex-column row-gap-4 py-5 px-4 p-lg-5">
+            <div class="d-flex flex-column justify-content-center align-items-center row-gap-2">
+              <div class="text-center">
+                <h3 class="fw-bold fs-4 mb-0">Rekomendasi Wisata</h3>
+              </div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center align-items-center mb-0">
+                  <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ url_for('public_app.services') }}">Layanan</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Rekomendasi Wisata</li>
+                </ol>
+              </nav>
+            </div>
+            <form method="POST">
+              {{ form.hidden_tag() }}
+              <div class="mb-3">
+                <label class="form-label">1. Titik lokasi yang akan Anda gunakan untuk menghitung jarak ke objek wisata.</label>
+                <div class="d-flex flex-column row-gap-2">
+                  {% for subfield in form.location_point %}
+                  <label class="pointer border bg-body-secondary rounded p-2">
+                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+                  </label>
+                  {% endfor %}
+                </div>
+                {% if form.location_point.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in form.location_point.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+              <div class="mb-3">
+                <label class="form-label">2. Jenis wisata yang Anda inginkan untuk melakukan perjalanan pariwisata.</label>
+                <div class="d-flex flex-column row-gap-2">
+                  {% for subfield in form.tour_type %}
+                  <label class="pointer border bg-body-secondary rounded p-2">
+                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+                  </label>
+                  {% endfor %}
+                </div>
+                {% if form.tour_type.errors %}
+                <div class="invalid-feedback d-block">
+                  {% for error in form.tour_type.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+              <div class="d-grid">{{ form.submit(class="btn btn-primary") }}</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Page Wrapper -->
+{% endblock %}

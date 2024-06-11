@@ -1,0 +1,57 @@
+{% extends 'components/public/base.html' %} {% set active_page = 'system_data' %} {% block content %}
+<!-- Page Wrapper -->
+<div class="page-wrapper d-flex bg-body-tertiary min-vh-100">
+  <div class="container my-auto">
+    <div class="row justify-content-center align-items-center pt-6rem pb-5">
+      <div class="col-lg-10">
+        <div class="card shadow rounded-3">
+          <div class="card-body d-flex flex-column row-gap-4 p-lg-5 py-5 px-4">
+            <div class="d-flex flex-column justify-content-center align-items-center row-gap-2">
+              <div class="text-center">
+                <h3 class="fw-bold fs-4 mb-0">Data Sistem</h3>
+              </div>
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center align-items-center mb-0">
+                  <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ url_for('public_app.services') }}">Layanan</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Data Sistem</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="row flex-column justify-content-center align-items-center row-gap-4">
+              <div class="col-lg-4">
+                <div class="card border-hover shadow-sm">
+                  <div class="card-body text-center">
+                    <a class="h6 fw-semibold fs-5 text-decoration-none stretched-link mb-0" href="{{ url_for('public_app.criteria') }}">Kriteria</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card border-hover shadow-sm">
+                  <div class="card-body text-center">
+                    <a class="h6 fw-semibold fs-5 text-decoration-none stretched-link mb-0" href="{{ url_for('public_app.sub_criteria') }}">Sub Kriteria</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card border-hover shadow-sm">
+                  <div class="card-body text-center">
+                    <a class="h6 fw-semibold fs-5 text-decoration-none stretched-link mb-0" href="{{ url_for('public_app.location_point') }}">Titik Lokasi</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="card border-hover shadow-sm">
+                  <div class="card-body text-center">
+                    <a class="h6 fw-semibold fs-5 text-decoration-none stretched-link mb-0" href="{{ url_for('public_app.tour_type') }}">Jenis Wisata</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Page Wrapper -->
+{% endblock %}

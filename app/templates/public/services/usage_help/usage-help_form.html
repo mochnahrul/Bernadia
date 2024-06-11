@@ -1,0 +1,53 @@
+{% extends 'components/public/base.html' %} {% set active_page = 'usage_help' %} {% block content %}
+<!-- Page Wrapper -->
+<div class="page-wrapper d-flex bg-body-tertiary min-vh-100">
+  <div class="container my-auto">
+    <div class="row justify-content-center align-items-center pt-6rem pb-5">
+      <div class="col-lg-10">
+        <div class="card shadow rounded-3">
+          <div class="card-body p-lg-5 py-5 px-4">
+            <div class="text-center mb-5">
+              <h3 class="fw-bold fs-4 mb-0">{{operation}} Bantuan Penggunaan</h3>
+            </div>
+            <form enctype="multipart/form-data" method="POST">
+              {{ form.hidden_tag() }}
+              <div class="mb-3">
+                {{ form.title.label(class="form-label") }} {% if form.title.errors %} {{ form.title(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.title.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %} {{ form.title(class="form-control") }} {% endif %}
+              </div>
+              <div class="mb-3">
+                {{ form.description.label(class="form-label") }} {% if form.description.errors %} {{ form.description(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.description.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %} {{ form.description(class="form-control") }} {% endif %}
+              </div>
+              <div class="mb-3">
+                {{ form.image.label(class="form-label") }} {% if form.image.errors %} {{ form.image(class="form-control is-invalid", type="file") }}
+                <div class="invalid-feedback">
+                  {% for error in form.image.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %} {{ form.image(class="form-control", type="file") }} {% endif %}
+              </div>
+              <div class="d-flex flex-row justify-content-end align-items-center column-gap-2">
+                <a class="btn btn-secondary" href="{{ url_for('public_app.usage_help') }}" role="button">Batal</a>
+                {{ form.submit(class="btn btn-primary") }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Page Wrapper -->
+{% endblock %}

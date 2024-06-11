@@ -1,0 +1,35 @@
+{% extends 'components/public/base.html' %} {% set active_page = 'home' %} {% block content %}
+<!-- Hero -->
+<div class="hero d-flex bg-body-tertiary min-vh-100">
+  <div class="container my-auto">
+    <div class="row justify-content-center align-items-center pt-6rem pb-5">
+      <div class="col-lg-8">
+        <div class="d-flex flex-column row-gap-3 text-center">
+          <h2 class="fw-bold fs-1 mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
+          <p class="fw-light mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt vel aliquid quae delectus natus assumenda ipsum quos ab enim, corrupti suscipit a culpa, ea dicta.</p>
+          {% if current_user.is_authenticated %}
+          <div class="d-flex justify-content-center align-item-center">
+            <a class="btn btn-primary rounded-5 py-1 px-3" href="{{ url_for('public_app.services') }}" role="button">Memulai</a>
+          </div>
+          {% else %}
+          <div class="d-flex justify-content-center align-item-center">
+            <a class="btn btn-primary rounded-5 py-1 px-3" href="{{ url_for('control_panel_app.login') }}" role="button">Memulai</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Hero -->
+
+<!-- Toast -->
+{% include 'components/public/includes/toast.html' %}
+<!-- End of Toast -->
+{% endblock %} {% block javascript %}
+<script>
+  $(function () {
+    $(".toast").toast("show");
+  });
+</script>
+{% endblock %}
