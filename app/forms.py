@@ -111,14 +111,18 @@ class TourListForm(FlaskForm):
   submit = SubmitField("Kirim")
 
 class TourRecommendation1Form(FlaskForm):
-  location_point = RadioField("Titik Lokasi", choices=[("Alun-alun", "Alun-alun"), ("Batas Situbondo", "Batas Situbondo"), ("Batas Jember", "Batas Jember")], validators=[DataRequired()])
-  tour_type = RadioField("Jenis Wisata", choices=[("Wisata Alam", "Wisata Alam"), ("Wisata Sejarah", "Wisata Sejarah"), ("Wisata Pemandian", "Wisata Pemandian")], validators=[DataRequired()])
+  location_point = RadioField("Titik Lokasi", choices=[("1", "Alun-Alun Bondowoso"), ("2", "Tugu Batas Kabupaten Situbondo dengan Bondowoso Prajekan"), ("3", "Gapura Batas Bondowoso Arak - Arak dengan Situbondo"), ("4", "Gapura Batas Bondowoso Maesan dengan Jember"), ("5", "Batas Bondowoso Ijen dengan Banyuwangi")], validators=[DataRequired()])
+  tour_type = RadioField("Jenis Wisata", choices=[("1", "Wisata Alam"), ("2", "Wisata Pemandian"), ("3", "Wisata Sejarah")], validators=[DataRequired()])
   submit = SubmitField("Berikutnya")
 
 class TourRecommendation2Form(FlaskForm):
-  ticket = RadioField("Tiket", choices=[("Rp. 0", "Rp. 0"), ("< Rp. 5.000", "< Rp. 5.000"), ("dll", "dll")], validators=[DataRequired()])
-  facility = RadioField("Fasilitas", choices=[("Fasilitas 1", "Fasilitas 1"), ("Fasilitas 2", "Fasilitas 2"), ("dll", "dll")], validators=[DataRequired()])
-  distance = RadioField("Jarak", choices=[("< 10 KM", "< 10 KM"), ("< 20 KM", "< 20 KM"), ("dll", "dll")], validators=[DataRequired()])
-  infrastructure = RadioField("Infrastruktur", choices=[("Infra 1", "Infra 1"), ("Infra 2", "Infra 2"), ("dll", "dll")], validators=[DataRequired()])
-  transportation_access = RadioField("Akses Transportasi", choices=[("Akses 1", "Akses 1"), ("Akses 2", "Akses 2"), ("dll", "dll")], validators=[DataRequired()])
+  ticket = RadioField("Tiket", choices=[("1", "Rp. 0"), ("2", "Kurang dari atau Rp. 5.000"), ("3", "Antara 5000 sampai Rp. 10.000"), ("4", "Lebih dari Rp. 10.000")], validators=[DataRequired()])
+  facility = RadioField("Fasilitas", choices=[("1", "Belum ada fasilitas"), ("2", "Fasilitas sangat kurang lengkap (Hanya terdapat tempat parkir dan tempat istirahat)"), ("3", "Fasilitas kurang lengkap"), ("4", "Fasilitas cukup lengkap"), ("5", "Fasilitas lengkap"),], validators=[DataRequired()])
+  distance = RadioField("Jarak", choices=[("1", "≤10KM"), ("2", "≤20KM"), ("3", "≤30KM"), ("4", "≤40KM"), ("5", "≤50KM"), ("6", ">50KM"),], validators=[DataRequired()])
+
+
+
+  infrastructure = RadioField("Infrastruktur", choices=[("1", "Belum ada infrastruktur yang tersedia"), ("2", "Infrastruktur sangat kurang bagus"), ("3", "Infrastruktur kurang bagus"), ("4", "Infrastruktur cukup bagus"), ("5", "Infrastruktur bagus"),], validators=[DataRequired()])
+  transportation_access = RadioField("Akses Transportasi", choices=[("1", "Jalan kurang lebar"), ("2", "Jalan cukup lebar"), ("3", "Jalan lebar")], validators=[DataRequired()])
   submit = SubmitField("Kirim")
+  

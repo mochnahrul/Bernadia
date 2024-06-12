@@ -7,7 +7,9 @@ from . import public_app
 from .. import db
 from ..models import UsageHelp, Criteria, SubCriteria, LocationPoint, TourType, TourList, TourDistance
 from ..forms import UsageHelpForm, CriteriaForm, SubCriteriaForm, LocationPointForm, TourTypeForm, TourListForm, TourRecommendation1Form, TourRecommendation2Form
-from ..utils import check_admin, save_resized_image
+from ..utils import check_admin, save_resized_image, process_input_list_based_on_weight
+
+import numpy as np
 
 # Homepage routes
 
@@ -467,16 +469,74 @@ def tour_recommendation_sub_criteria():
   if form.validate_on_submit():
     location_point = session.get("location_point")
     tour_type = session.get("tour_type")
+    ticket = form.ticket.data
+    facility = form.facility.data
+    distance = form.distance.data
+    infrastructure = form.infrastructure.data
+    transportation_access = form.transportation_access.data
+
+
+    # Get the tour type based on the list -> 1.Alam,  2.Pemandian,  3.Sejarah
+
+    # Get the distance from the location point
+
+    # Filter the C1-C5 to match the form
+
+    # Get the list of the metrics
+
+    # Get the avg_weight of each Cs
+    avg_weight = [0.1887, 0.1711, 0.2332, 0.1098, 0.2973]
+    
+    # weight type, 1 is for cost, 2 is for benefit
+    weight_type = [1,2,1,2,2]
+
+    filtered_np_list = np.array([
+          [3.00, 4.00, 1.00, 5.00, 3.00],
+          [3.00, 5.00, 6.00, 5.00, 3.00],
+          [2.00, 4.00, 1.00, 5.00, 3.00],
+          [3.00, 4.00, 2.00, 5.00, 3.00],
+          [3.00, 5.00, 1.00, 5.00, 3.00],
+          [2.00, 5.00, 3.00, 5.00, 3.00],
+          [2.00, 4.00, 2.00, 5.00, 3.00],
+          [4.00, 4.00, 2.00, 5.00, 3.00],
+          [3.00, 4.00, 1.00, 5.00, 3.00],
+          [2.00, 4.00, 3.00, 5.00, 3.00]
+    ])
+
+    list_names = ["Pemandian Alam Tasnan",
+                  "Pemandian Air Panas Blawan",
+                  "Pemandian Al-Amin",
+                  "Pemandian WOW Klabang",
+                  "Navara Water Park",
+                  "Wisata Tirta Agung",
+                  "Wisata Bukit Luwih",
+                  "Bosamba Rafting",
+                  "Pemandian Kharisma",
+                  "Teduh Glamping"
+                  ]
+
+    preference_metric = process_input_list_based_on_weight(filtered_np_list, np.array(avg_weight), weight_type)
+
+    # Pair the values with their ids
+    paired_list = list(zip(preference_metric, list_names))
+
+    # Sort the paired list based on the values
+    sorted_paired_list = sorted(paired_list, reverse=True)
+    print(sorted_paired_list)
+
+    # Get the top 3 biggest numbers along with their ids
+    top_3_paired_list = sorted_paired_list[:3]
+
+    # Convert to dictionary format
+    # top_3_dict = {id: value for value, id in top_3_paired_list}
+    
   
     session.pop("location_point", None)
     session.pop("ticket_price", None)
     session.pop("form1_filled", None)
 
-    result = [
-      {"ranking": "1", "score": "100", "tour_object": "Jakarta"},
-      {"ranking": "2", "score": "90", "tour_object": "Surabaya"},
-      {"ranking": "3", "score": "80", "tour_object": "Malang"}
-    ]
+    result = [{"ranking": str(rank), "score": str(int(value * 100)), "tour_object": id} 
+               for rank, (value, id) in enumerate(top_3_paired_list, start=1)]
 
     return render_template("public/services/tour_recommendation/tour-recommendation_result.html", title="Rekomendasi Wisata - Development", result=result)
 

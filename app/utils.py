@@ -10,6 +10,9 @@ from flask_login import current_user
 from . import mail
 from .models import User
 
+import numpy as np
+import math
+
 
 # function to check if the user is an admin
 def check_admin():
@@ -40,3 +43,72 @@ def save_resized_image(input, width, height):
     image.save(image_path)
 
     return image_fn
+  
+
+def process_input_list_based_on_weight(input_data, avg_weight, weight_type):
+    # Count the length for further process
+    len_options = len(input_data)
+    len_criteria = len(input_data[0])
+
+    # Get the powered input
+    powered_input_data = [
+        [input_data[row][col] ** 2 for col in range(len_criteria)]
+        for row in range(len_options)
+    ]
+
+
+    # Get the transposed data for denom
+    transposed_data = zip(*powered_input_data)
+    denominator_ex = [np.round(math.sqrt(sum(column)) ,5) for column in transposed_data]
+
+    # Normalize the input
+    normalized_input_data = [
+        [np.round(input_data[row][col] / denominator_ex[col] ,5) for col in range(len_criteria)]
+        for row in range(len_options)
+    ]
+
+    # Times the normalized data with the weight
+    weighted_normalized_input_data = [
+        [np.round(normalized_input_data[row][col] * avg_weight[col], 5) for col in range(len_criteria)]
+        for row in range(len_options)
+    ]
+
+    # Transpose the value
+    transposed_weighted_normalized_input_data = np.transpose(weighted_normalized_input_data)
+
+    # Get the minmax value of the columns
+    min_values_per_column = []
+    max_values_per_column = []
+
+    for row in range(len(transposed_weighted_normalized_input_data)):
+        min_val = np.min(transposed_weighted_normalized_input_data[row])
+        max_val = np.max(transposed_weighted_normalized_input_data[row])
+
+        if weight_type[row] == 1:
+            max_values_per_column.append(min_val)
+            min_values_per_column.append(max_val)
+
+        elif weight_type[row] == 2:
+            max_values_per_column.append(max_val)
+            min_values_per_column.append(min_val)
+
+
+    # Power the value after substracting and adding the value
+    powered_min_value = [
+        [round(((max_values_per_column[col] - weighted_normalized_input_data[row][col]) ** 2), 5) for col in range(len_criteria)]
+        for row in range(len_options)
+    ]
+
+    powered_max_value = [
+        [round(((weighted_normalized_input_data[row][col] - min_values_per_column[col]) ** 2), 5) for col in range(len_criteria)]
+        for row in range(len_options)
+    ]
+
+    # Get the di+ and di- score
+    di_plus_points = [np.round(math.sqrt(sum(column)) ,5) for column in powered_min_value]
+    di_minus_points = [np.round(math.sqrt(sum(column)) ,5) for column in powered_max_value]
+
+    # Calculate the preference list
+    preference_list = [np.round(di_minus_points[i] / (di_minus_points[i] + di_plus_points[i]) ,2) for i in range(len_options)]
+
+    return preference_list
