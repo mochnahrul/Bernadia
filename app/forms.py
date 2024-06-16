@@ -1,13 +1,13 @@
 # third-party imports
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, TextAreaField, RadioField, FieldList, FormField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
-from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, FloatField, TextAreaField, RadioField, FieldList, FormField, SubmitField
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, Optional
+from wtforms_sqlalchemy.fields import QuerySelectField, QueryRadioField
 from flask_login import current_user
 
 # local imports
-from .models import User, Criteria, TourType, LocationPoint
+from .models import User, Criteria, TourType, LocationPoint, SubCriteria
 
 
 class RegisterForm(FlaskForm):
@@ -76,8 +76,8 @@ class UsageHelpForm(FlaskForm):
 class CriteriaForm(FlaskForm):
   name = StringField("Nama Kriteria", validators=[DataRequired(), Length(max=128)])
   code = StringField("Kode Kriteria", validators=[DataRequired(), Length(max=128)])
-  attribute = SelectField("Atribut", choices=[("", "Pilih Atribut"), ("cost", "Cost"), ("benefit", "Benefit")], validators=[DataRequired()])
-  weight = IntegerField("Bobot", validators=[DataRequired()])
+  attribute = SelectField("Atribut", choices=[("", "Pilih Atribut"), ("Cost", "Cost"), ("Benefit", "Benefit")], validators=[DataRequired()])
+  weight = FloatField("Bobot", validators=[DataRequired()])
   submit = SubmitField("Kirim")
 
 class SubCriteriaForm(FlaskForm):
@@ -95,30 +95,30 @@ class TourTypeForm(FlaskForm):
   submit = SubmitField("Kirim")
 
 class DistanceForm(FlaskForm):
-  location_point = QuerySelectField("Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name", allow_blank=True, blank_text="Pilih Lokasi")
+  location_point = QuerySelectField("Titik Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name", allow_blank=True, blank_text="Pilih Lokasi")
   distance = IntegerField("Jarak", validators=[DataRequired()])
 
 class TourListForm(FlaskForm):
   name = StringField("Nama Objek Wisata", validators=[DataRequired(), Length(max=128)])
   tour_type = QuerySelectField("Jenis Wisata", validators=[DataRequired()], query_factory=lambda: TourType.query.order_by(TourType.name.asc()).all(), get_label="name", allow_blank=True, blank_text="Pilih Jenis Wisata")
-  ticket  = SelectField("Tiket", choices=[("", "Pilih Tiket"), (1, "1"), (2, "2")], validators=[DataRequired()])
-  facility  = SelectField("Fasilitas", choices=[("", "Pilih Fasilitas"), (1, "1"), (2, "2")], validators=[DataRequired()])
-  infrastructure  = SelectField("Infrastruktur", choices=[("", "Pilih Infrastruktur"), (1, "1"), (2, "2")], validators=[DataRequired()])
-  transportation_access  = SelectField("Akses Transportasi", choices=[("", "Pilih Infrastruktur"), (1, "1"), (2, "2")], validators=[DataRequired()])
+  ticket = IntegerField("Harga Tiket", validators=[DataRequired()])
+  facility  = SelectField("Fasilitas", choices=[("", "Pilih Fasilitas"), ("1", "Belum ada fasilitas"), ("2", "Fasilitas sangat kurang lengkap (Hanya terdapat tempat parkir dan tempat istirahat)"), ("3", "Fasilitas kurang lengkap"), ("4", "Fasilitas cukup lengkap"), ("5", "Fasilitas lengkap"),], validators=[DataRequired()])
+  infrastructure  = SelectField("Infrastruktur", choices=[("", "Pilih Infrastruktur"), ("1", "Belum ada infrastruktur yang tersedia"), ("2", "Infrastruktur sangat kurang bagus"), ("3", "Infrastruktur kurang bagus"), ("4", "Infrastruktur cukup bagus"), ("5", "Infrastruktur bagus")], validators=[DataRequired()])
+  transportation_access  = SelectField("Akses Transportasi", choices=[("", "Pilih Akses Transportasi"), ("1", "Jalan kurang lebar"), ("2", "Jalan cukup lebar"), ("3", "Jalan lebar")], validators=[DataRequired()])
   description = TextAreaField("Deskripsi Wisata", render_kw={"rows": 3})
   image = FileField("Gambar", validators=[FileAllowed(["jpg", "jpeg", "png"], message="File yang Anda unggah tidak diperbolehkan. Silakan unggah file dalam format .jpg, .jpeg, atau .png.")])
-  distances = FieldList(FormField(DistanceForm), min_entries=1)
+  distances = FieldList(FormField(DistanceForm))
   submit = SubmitField("Kirim")
 
 class TourRecommendation1Form(FlaskForm):
-  location_point = RadioField("Titik Lokasi", choices=[("Alun-alun", "Alun-alun"), ("Batas Situbondo", "Batas Situbondo"), ("Batas Jember", "Batas Jember")], validators=[DataRequired()])
-  tour_type = RadioField("Jenis Wisata", choices=[("Wisata Alam", "Wisata Alam"), ("Wisata Sejarah", "Wisata Sejarah"), ("Wisata Pemandian", "Wisata Pemandian")], validators=[DataRequired()])
+  location_point = QueryRadioField("Titik Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name")
+  tour_type = QueryRadioField("Jenis Wisata", validators=[DataRequired()], query_factory=lambda: TourType.query.all(), get_label="name")
   submit = SubmitField("Berikutnya")
 
 class TourRecommendation2Form(FlaskForm):
-  ticket = RadioField("Tiket", choices=[("Rp. 0", "Rp. 0"), ("< Rp. 5.000", "< Rp. 5.000"), ("dll", "dll")], validators=[DataRequired()])
-  facility = RadioField("Fasilitas", choices=[("Fasilitas 1", "Fasilitas 1"), ("Fasilitas 2", "Fasilitas 2"), ("dll", "dll")], validators=[DataRequired()])
-  distance = RadioField("Jarak", choices=[("< 10 KM", "< 10 KM"), ("< 20 KM", "< 20 KM"), ("dll", "dll")], validators=[DataRequired()])
-  infrastructure = RadioField("Infrastruktur", choices=[("Infra 1", "Infra 1"), ("Infra 2", "Infra 2"), ("dll", "dll")], validators=[DataRequired()])
-  transportation_access = RadioField("Akses Transportasi", choices=[("Akses 1", "Akses 1"), ("Akses 2", "Akses 2"), ("dll", "dll")], validators=[DataRequired()])
+  ticket = QueryRadioField("Tiket", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=1).all(), get_label="name")
+  facility = QueryRadioField("Fasilitas", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=2).all(), get_label="name")
+  distance = QueryRadioField("Jarak", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=3).all(), get_label="name")
+  infrastructure = QueryRadioField("Infrastruktur", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=4).all(), get_label="name")
+  transportation_access = QueryRadioField("Akses Transportasi", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=5).all(), get_label="name")
   submit = SubmitField("Kirim")

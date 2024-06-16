@@ -1,13 +1,48 @@
 body {
-  font-family: "DM Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+.bg-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(../media/uploads/hero.jpg);
+  /* background-image: url(../media/uploads/hero.jpg); */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.bg-gradient-hero {
+  background-color: hsla(260, 0%, 100%, 1);
+  background-image: radial-gradient(at 68% 16%, hsla(252, 90%, 75%, 1) 0px, transparent 50%), radial-gradient(at 25% 64%, hsla(252, 88%, 62%, 1) 0px, transparent 50%), radial-gradient(at 13% 9%, hsla(242, 98%, 79%, 1) 0px, transparent 50%),
+    radial-gradient(at 93% 97%, hsla(257, 79%, 75%, 1) 0px, transparent 50%), radial-gradient(at 67% 22%, hsla(283, 81%, 68%, 1) 0px, transparent 50%), radial-gradient(at 75% 86%, hsla(350, 98%, 79%, 1) 0px, transparent 50%),
+    radial-gradient(at 6% 6%, hsla(359, 84%, 78%, 1) 0px, transparent 50%);
+}
+
+.btn-secondary {
+  background-image: linear-gradient(to right, #614385 0%, #516395 51%, #614385 100%) !important;
+  transition: 0.5s;
+  background-size: 200% auto;
+}
+
+.btn-secondary:hover {
+  background-position: right center;
+}
+
+.h-20rem {
+  height: 20rem;
 }
 
 .pt-6rem {
   padding-top: 6rem;
 }
 
-.border-hover:hover {
-  border-color: black !important;
+.hover-upwards {
+  transition: all 0.2s ease-in-out;
+}
+
+.hover-upwards:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 8px 16px 0px !important;
+  transform: translate(0, -5px);
 }
 
 .pointer {

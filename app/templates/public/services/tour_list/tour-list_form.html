@@ -30,13 +30,41 @@
                 {% else %} {{ form.tour_type(class="form-select") }} {% endif %}
               </div>
               <div class="mb-3">
-                {{ form.ticket.label(class="form-label") }} {% if form.ticket.errors %} {{ form.ticket(class="form-select is-invalid") }}
+                <label class="form-label">Jarak ke Lokasi</label>
+                <div class="distance-fields d-flex flex-column row-gap-3">
+                  {% for distance_form in form.distances %}
+                  <div class="d-flex flex-column flex-lg-row gap-2 border rounded p-3">
+                    {{ distance_form.hidden_tag() }}
+                    <div class="d-flex flex-column w-100">
+                      {{ distance_form.location_point.label(class="form-label") }} {% if distance_form.location_point.errors %} {{ distance_form.location_point(class="form-select is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in distance_form.location_point.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ distance_form.location_point(class="form-select") }} {% endif %}
+                    </div>
+                    <div class="d-flex flex-column w-100">
+                      {{ distance_form.distance.label(class="form-label") }} {% if distance_form.distance.errors %} {{ distance_form.distance(class="form-control is-invalid") }}
+                      <div class="invalid-feedback">
+                        {% for error in distance_form.distance.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %} {{ distance_form.distance(class="form-control") }} {% endif %}
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="mb-3">
+                {{ form.ticket.label(class="form-label") }} {% if form.ticket.errors %} {{ form.ticket(class="form-control is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.ticket.errors %}
                   <span>{{ error }}</span>
                   {% endfor %}
                 </div>
-                {% else %} {{ form.ticket(class="form-select") }} {% endif %}
+                {% else %} {{ form.ticket(class="form-control") }} {% endif %}
               </div>
               <div class="mb-3">
                 {{ form.facility.label(class="form-label") }} {% if form.facility.errors %} {{ form.facility(class="form-select is-invalid") }}
@@ -84,22 +112,6 @@
                 {% else %} {{ form.image(class="form-control") }} {% endif %}
               </div>
 
-              <!-- Distance Fields -->
-              <div class="mb-3">
-                <label class="form-label">Jarak ke Lokasi</label>
-                <div class="distance-fields">
-                  {% for distance_form in form.distances %}
-                  <div class="d-flex align-items-center mb-2">
-                    <!-- Sertakan token CSRF untuk setiap form jarak -->
-                    {{ distance_form.csrf_token }} {{ distance_form.location_point(class="form-select me-2") }} {{ distance_form.distance(class="form-control me-2") }}
-                    <button type="button" class="btn btn-danger" onclick="removeDistanceField(this)">Hapus</button>
-                  </div>
-                  {% endfor %}
-                </div>
-                <button type="button" class="btn btn-secondary" onclick="addDistanceField()">Tambah Jarak</button>
-              </div>
-              <!-- End of Distance Fields -->
-
               <div class="d-flex flex-row justify-content-end align-items-center column-gap-2">
                 <a class="btn btn-secondary" href="{{ url_for('public_app.tour_list') }}" role="button">Batal</a>
                 {{ form.submit(class="btn btn-primary") }}
@@ -111,48 +123,5 @@
     </div>
   </div>
 </div>
-
-<!-- Toast -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <strong class="me-auto">Development</strong>
-      <small>Just now</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body"></div>
-  </div>
-</div>
-<!-- End of Toast -->
-{% endblock %} {% block javascript %}
-<script>
-  function showToast(message) {
-    var toastEl = document.getElementById("liveToast");
-    var toastBody = toastEl.querySelector(".toast-body");
-    toastBody.textContent = message;
-
-    var toast = new bootstrap.Toast(toastEl);
-    toast.show();
-  }
-
-  function addDistanceField() {
-    var container = document.querySelector(".distance-fields");
-    var newField = container.firstElementChild.cloneNode(true);
-    // Hapus nilai input jarak
-    newField.querySelector("input").value = "";
-    // Dapatkan token CSRF dari form asli dan salin ke form baru
-    var csrfToken = document.querySelector("input[name='csrf_token']").cloneNode(true);
-    newField.appendChild(csrfToken);
-    container.appendChild(newField);
-  }
-
-  function removeDistanceField(button) {
-    var container = document.querySelector(".distance-fields");
-    if (container.childElementCount > 1) {
-      button.parentNode.remove();
-    } else {
-      showToast("Minimal satu jarak harus ada.");
-    }
-  }
-</script>
+<!-- End of Page Wrapper -->
 {% endblock %}
