@@ -20,7 +20,7 @@ def register():
   if form.validate_on_submit():
     hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
 
-    new_user = User(name=form.name.data, role="admin", gender=form.gender.data, phone=form.phone.data, email=form.email.data, password=hashed_password)
+    new_user = User(name=form.name.data, gender=form.gender.data, phone=form.phone.data, email=form.email.data, password=hashed_password)
 
     db.session.add(new_user)
     db.session.commit()
@@ -90,12 +90,12 @@ def reset_password(token):
 
   return render_template("control_panel/auth/reset-password.html", title="Pengaturan Ulang Password - Development", form=form)
 
-@control_panel_app.route("/pengguna/<id>", methods=["GET", "POST"])
+@control_panel_app.route("/user/<id>", methods=["GET", "POST"])
 def profile(id):
   user = User.query.filter_by(id=id).first_or_404()
   return render_template("control_panel/account/profile.html", title=f"{user.name} - Development", user=user)
 
-@control_panel_app.route("/pengguna/<id>/edit", methods=["GET", "POST"])
+@control_panel_app.route("/user/<id>/edit", methods=["GET", "POST"])
 @login_required
 def edit_profile(id):
   user = User.query.filter_by(id=id).first_or_404()
@@ -123,7 +123,7 @@ def edit_profile(id):
 
   return render_template("control_panel/account/profile_form.html", title="Edit Profile - Development", user=user, form=form)
 
-@control_panel_app.route("/signout")
+@control_panel_app.route("/keluar")
 @login_required
 def logout():
   logout_user()

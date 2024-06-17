@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-lg-12">
                   {% if current_user.email == user.email %}
-                  <a class="btn btn-secondary text-white rounded-5 py-1 px-3" href="{{ url_for('control_panel_app.edit_profile', id=current_user.id) }}" role="button">Edit Profil</a>
+                  <a class="btn btn-primary rounded-5 py-1 px-3" href="{{ url_for('control_panel_app.edit_profile', id=current_user.id) }}" role="button">Edit Profil</a>
                   {% endif %}
                 </div>
               </div>

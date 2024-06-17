@@ -25,9 +25,9 @@ def send_password_reset(user):
   mail.send(message)
 
 # function to save a resized image in a directory
-def save_resized_image(input, width, height):
+def save_resized_image(input, width, height, path):
   if input:
-    upload_dir = os.path.join(current_app.root_path, "static/media/uploads")
+    upload_dir = os.path.join(current_app.root_path, "static/media/uploads", path)
     if not os.path.exists(upload_dir):
       os.makedirs(upload_dir)
 

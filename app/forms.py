@@ -1,7 +1,7 @@
 # third-party imports
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, FloatField, TextAreaField, RadioField, FieldList, FormField, SubmitField
+from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, FloatField, TextAreaField, FieldList, FormField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, Optional
 from wtforms_sqlalchemy.fields import QuerySelectField, QueryRadioField
 from flask_login import current_user
@@ -11,11 +11,11 @@ from .models import User, Criteria, TourType, LocationPoint, SubCriteria
 
 
 class RegisterForm(FlaskForm):
-  name = StringField("Nama", validators=[DataRequired(), Length(min=4, max=60)])
+  name = StringField("Nama", validators=[DataRequired(), Length(min=4, max=60, message="Kolom harus memiliki panjang setidaknya 4 karakter.")])
   gender = SelectField("Jenis Kelamin", choices=[("", "Pilih Jenis Kelamin"), ("Laki-laki", "Laki-laki"), ("Perempuan", "Perempuan")], validators=[DataRequired()])
-  phone = StringField("Nomor HP", validators=[DataRequired(), Length(min=10, max=20)])
+  phone = StringField("Nomor HP", validators=[DataRequired(), Length(min=10, max=20, message="Kolom harus memiliki panjang setidaknya 10 karakter.")])
   email = EmailField("Email", validators=[DataRequired(), Email(message="Email yang Anda masukkan tidak valid."), Length(max=60)])
-  password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=128)])
+  password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=128, message="Kolom harus memiliki panjang setidaknya 8 karakter.")])
   confirm = PasswordField("Konfirmasi Password", validators=[DataRequired(), Length(min=8, max=128), EqualTo("password", message="Konfirmasi password tidak cocok.")])
   submit = SubmitField("Daftar Sekarang")
 
@@ -53,7 +53,7 @@ class EditProfileForm(FlaskForm):
   gender = SelectField("Jenis Kelamin", choices=[("", "Pilih Jenis Kelamin"), ("Laki-laki", "Laki-laki"), ("Perempuan", "Perempuan")], validators=[DataRequired()])
   phone = StringField("Nomor HP", validators=[DataRequired(), Length(min=10, max=20)])
   email = EmailField("Email", validators=[DataRequired(), Email(message="Email yang Anda masukkan tidak valid."), Length(max=60)])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
   def validate_phone(self, phone):
     if phone.data != current_user.phone:
@@ -71,28 +71,28 @@ class UsageHelpForm(FlaskForm):
   title = StringField("Judul", validators=[DataRequired(), Length(max=128)])
   description = TextAreaField("Deskripsi", render_kw={"rows": 3})
   image = FileField("Gambar", validators=[FileAllowed(["jpg", "jpeg", "png"], message="File yang Anda unggah tidak diperbolehkan. Silakan unggah file dalam format .jpg, .jpeg, atau .png.")])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class CriteriaForm(FlaskForm):
   name = StringField("Nama Kriteria", validators=[DataRequired(), Length(max=128)])
   code = StringField("Kode Kriteria", validators=[DataRequired(), Length(max=128)])
   attribute = SelectField("Atribut", choices=[("", "Pilih Atribut"), ("Cost", "Cost"), ("Benefit", "Benefit")], validators=[DataRequired()])
   weight = FloatField("Bobot", validators=[DataRequired()])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class SubCriteriaForm(FlaskForm):
   criteria = QuerySelectField("Kriteria", validators=[DataRequired()], query_factory=lambda: Criteria.query.order_by(Criteria.name.asc()).all(), get_label="name", allow_blank=True, blank_text="Pilih Kriteria")
   name = StringField("Nama Sub Kriteria", validators=[DataRequired(), Length(max=128)])
   value = IntegerField("Nilai Sub Kriteria", validators=[DataRequired()])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class LocationPointForm(FlaskForm):
   name = StringField("Nama Titik Lokasi", validators=[DataRequired(), Length(max=128)])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class TourTypeForm(FlaskForm):
   name = StringField("Nama Jenis Wisata", validators=[DataRequired(), Length(max=128)])
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class DistanceForm(FlaskForm):
   location_point = QuerySelectField("Titik Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name", allow_blank=True, blank_text="Pilih Lokasi")
@@ -102,13 +102,13 @@ class TourListForm(FlaskForm):
   name = StringField("Nama Objek Wisata", validators=[DataRequired(), Length(max=128)])
   tour_type = QuerySelectField("Jenis Wisata", validators=[DataRequired()], query_factory=lambda: TourType.query.order_by(TourType.name.asc()).all(), get_label="name", allow_blank=True, blank_text="Pilih Jenis Wisata")
   ticket = IntegerField("Harga Tiket", validators=[DataRequired()])
-  facility  = SelectField("Fasilitas", choices=[("", "Pilih Fasilitas"), ("1", "Belum ada fasilitas"), ("2", "Fasilitas sangat kurang lengkap (Hanya terdapat tempat parkir dan tempat istirahat)"), ("3", "Fasilitas kurang lengkap"), ("4", "Fasilitas cukup lengkap"), ("5", "Fasilitas lengkap"),], validators=[DataRequired()])
-  infrastructure  = SelectField("Infrastruktur", choices=[("", "Pilih Infrastruktur"), ("1", "Belum ada infrastruktur yang tersedia"), ("2", "Infrastruktur sangat kurang bagus"), ("3", "Infrastruktur kurang bagus"), ("4", "Infrastruktur cukup bagus"), ("5", "Infrastruktur bagus")], validators=[DataRequired()])
-  transportation_access  = SelectField("Akses Transportasi", choices=[("", "Pilih Akses Transportasi"), ("1", "Jalan kurang lebar"), ("2", "Jalan cukup lebar"), ("3", "Jalan lebar")], validators=[DataRequired()])
+  facility = QuerySelectField("Fasilitas", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=2).all(), get_label="name", allow_blank=True, blank_text="Pilih Fasilitas")
+  infrastructure = QuerySelectField("Infrastruktur", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=4).all(), get_label="name", allow_blank=True, blank_text="Pilih Infrastruktur")
+  transportation_access = QuerySelectField("Akses Transportasi", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=5).all(), get_label="name", allow_blank=True, blank_text="Pilih Akses Transportasi")
   description = TextAreaField("Deskripsi Wisata", render_kw={"rows": 3})
   image = FileField("Gambar", validators=[FileAllowed(["jpg", "jpeg", "png"], message="File yang Anda unggah tidak diperbolehkan. Silakan unggah file dalam format .jpg, .jpeg, atau .png.")])
   distances = FieldList(FormField(DistanceForm))
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")
 
 class TourRecommendation1Form(FlaskForm):
   location_point = QueryRadioField("Titik Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name")
@@ -121,4 +121,4 @@ class TourRecommendation2Form(FlaskForm):
   distance = QueryRadioField("Jarak", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=3).all(), get_label="name")
   infrastructure = QueryRadioField("Infrastruktur", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=4).all(), get_label="name")
   transportation_access = QueryRadioField("Akses Transportasi", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=5).all(), get_label="name")
-  submit = SubmitField("Kirim")
+  submit = SubmitField("Selesai")

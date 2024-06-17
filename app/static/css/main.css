@@ -3,8 +3,7 @@ body {
 }
 
 .bg-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(../media/uploads/hero.jpg);
-  /* background-image: url(../media/uploads/hero.jpg); */
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(../media/uploads/home/hero.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -18,7 +17,7 @@ body {
     radial-gradient(at 6% 6%, hsla(359, 84%, 78%, 1) 0px, transparent 50%);
 }
 
-.btn-secondary {
+/* .btn-secondary {
   background-image: linear-gradient(to right, #614385 0%, #516395 51%, #614385 100%) !important;
   transition: 0.5s;
   background-size: 200% auto;
@@ -26,7 +25,7 @@ body {
 
 .btn-secondary:hover {
   background-position: right center;
-}
+} */
 
 .h-20rem {
   height: 20rem;
@@ -90,9 +89,9 @@ body {
 /* Responsive Breakpoints */
 
 @media screen and (min-width: 1200px) {
-  .rounded-lg-start {
-    border-top-left-radius: 6px !important;
-    border-bottom-left-radius: 6px !important;
+  .rounded-lg-start-3 {
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
   }

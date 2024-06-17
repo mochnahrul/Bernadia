@@ -1,113 +1,124 @@
 {% extends 'components/public/base.html' %} {% set active_page = 'tour_recommendation' %} {% block content %}
-<!-- Page Wrapper -->
-<div class="page-wrapper d-flex bg-body-tertiary min-vh-100">
+<!-- Banner -->
+<div class="banner d-flex bg-hero h-20rem">
   <div class="container my-auto">
-    <div class="row justify-content-center align-items-center pt-6rem pb-5">
+    <div class="row justify-content-center align-items-center">
       <div class="col-lg-10">
-        <div class="card shadow rounded-3">
-          <div class="card-body d-flex flex-column row-gap-4 py-5 px-4 p-lg-5">
-            <div class="d-flex flex-column justify-content-center align-items-center row-gap-2">
-              <div class="text-center">
-                <h3 class="fw-bold fs-4 mb-0">Rekomendasi Wisata</h3>
-              </div>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb justify-content-center align-items-center mb-0">
-                  <li class="breadcrumb-item"><a class="text-decoration-none" href="{{ url_for('public_app.services') }}">Layanan</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Rekomendasi Wisata</li>
-                </ol>
-              </nav>
-            </div>
-            <form method="POST">
-              {{ form.hidden_tag() }}
-              <div class="mb-3">
-                <label class="form-label">1. Berapakah harga tiket wisata yang Anda inginkan dalam berwisata?</label>
-                <div class="d-flex flex-column row-gap-2">
-                  {% for subfield in form.ticket %}
-                  <label class="pointer border bg-body-secondary rounded p-2">
-                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
-                  </label>
-                  {% endfor %}
-                </div>
-                {% if form.ticket.errors %}
-                <div class="invalid-feedback d-block">
-                  {% for error in form.ticket.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-              <div class="mb-3">
-                <label class="form-label">2. Apa saja fasilitas yang Anda inginkan dalam berwisata?</label>
-                <div class="d-flex flex-column row-gap-2">
-                  {% for subfield in form.facility %}
-                  <label class="pointer border bg-body-secondary rounded p-2">
-                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
-                  </label>
-                  {% endfor %}
-                </div>
-                {% if form.facility.errors %}
-                <div class="invalid-feedback d-block">
-                  {% for error in form.facility.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-              <div class="mb-3">
-                <label class="form-label">3. Berapakah jarak tempuh yang Anda inginkan dalam berwisata?</label>
-                <div class="d-flex flex-column row-gap-2">
-                  {% for subfield in form.distance %}
-                  <label class="pointer border bg-body-secondary rounded p-2">
-                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
-                  </label>
-                  {% endfor %}
-                </div>
-                {% if form.distance.errors %}
-                <div class="invalid-feedback d-block">
-                  {% for error in form.distance.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-              <div class="mb-3">
-                <label class="form-label">4. Apa saja infrastruktur yang Anda inginkan pada saat berwisata?</label>
-                <div class="d-flex flex-column row-gap-2">
-                  {% for subfield in form.infrastructure %}
-                  <label class="pointer border bg-body-secondary rounded p-2">
-                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
-                  </label>
-                  {% endfor %}
-                </div>
-                {% if form.infrastructure.errors %}
-                <div class="invalid-feedback d-block">
-                  {% for error in form.infrastructure.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-              <div class="mb-3">
-                <label class="form-label">5. Apa akses transportasi yang akan Anda inginkan pada saat berwisata?</label>
-                <div class="d-flex flex-column row-gap-2">
-                  {% for subfield in form.transportation_access %}
-                  <label class="pointer border bg-body-secondary rounded p-2">
-                    <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
-                  </label>
-                  {% endfor %}
-                </div>
-                {% if form.transportation_access.errors %}
-                <div class="invalid-feedback d-block">
-                  {% for error in form.transportation_access.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% endif %}
-              </div>
-              <div class="d-grid">{{ form.submit(class="btn btn-primary") }}</div>
-            </form>
-          </div>
+        <div class="text-white text-center">
+          <h2 class="fw-bold fs-3 title-clamp-2 mb-0">Rekomendasi Wisata</h2>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End of Banner -->
+
+<!-- Page Wrapper -->
+<div class="page-wrapper bg-body-tertiary">
+  <div class="container">
+    <div class="row justify-content-center align-items-center pt-5">
+      <div class="col-lg-10">
+        <div class="d-flex flex-column row-gap-3">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb justify-content-center align-items-center mb-0">
+              <li class="breadcrumb-item"><a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ url_for('public_app.services') }}">Layanan</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Rekomendasi Wisata</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center py-5">
+      <div class="col-lg-7">
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="mb-4">
+            <label class="form-label mb-3">1. Berapakah harga tiket wisata yang Anda inginkan dalam berwisata?</label>
+            <div class="d-flex flex-column row-gap-2">
+              {% for subfield in form.ticket %}
+              <label class="pointer border bg-body-secondary rounded p-2">
+                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+              </label>
+              {% endfor %}
+            </div>
+            {% if form.ticket.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.ticket.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mb-4">
+            <label class="form-label mb-3">2. Apa saja fasilitas yang Anda inginkan dalam berwisata?</label>
+            <div class="d-flex flex-column row-gap-2">
+              {% for subfield in form.facility %}
+              <label class="pointer border bg-body-secondary rounded p-2">
+                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+              </label>
+              {% endfor %}
+            </div>
+            {% if form.facility.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.facility.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mb-4">
+            <label class="form-label mb-3">3. Berapakah jarak tempuh yang Anda inginkan dalam berwisata?</label>
+            <div class="d-flex flex-column row-gap-2">
+              {% for subfield in form.distance %}
+              <label class="pointer border bg-body-secondary rounded p-2">
+                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+              </label>
+              {% endfor %}
+            </div>
+            {% if form.distance.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.distance.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mb-4">
+            <label class="form-label mb-3">4. Apa saja infrastruktur yang Anda inginkan pada saat berwisata?</label>
+            <div class="d-flex flex-column row-gap-2">
+              {% for subfield in form.infrastructure %}
+              <label class="pointer border bg-body-secondary rounded p-2">
+                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+              </label>
+              {% endfor %}
+            </div>
+            {% if form.infrastructure.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.infrastructure.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="mb-4">
+            <label class="form-label mb-3">5. Apa akses transportasi yang akan Anda inginkan pada saat berwisata?</label>
+            <div class="d-flex flex-column row-gap-2">
+              {% for subfield in form.transportation_access %}
+              <label class="pointer border bg-body-secondary rounded p-2">
+                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+              </label>
+              {% endfor %}
+            </div>
+            {% if form.transportation_access.errors %}
+            <div class="invalid-feedback d-block">
+              {% for error in form.transportation_access.errors %}
+              <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          <div class="d-grid">{{ form.submit(class="btn btn-dark rounded-5") }}</div>
+        </form>
       </div>
     </div>
   </div>
