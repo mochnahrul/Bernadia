@@ -2,7 +2,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, FloatField, TextAreaField, FieldList, FormField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, Optional
+from wtforms.validators import DataRequired, InputRequired, Email, Length, EqualTo, ValidationError
 from wtforms_sqlalchemy.fields import QuerySelectField, QueryRadioField
 from flask_login import current_user
 
@@ -96,12 +96,12 @@ class TourTypeForm(FlaskForm):
 
 class DistanceForm(FlaskForm):
   location_point = QuerySelectField("Titik Lokasi", validators=[DataRequired()], query_factory=lambda: LocationPoint.query.all(), get_label="name", allow_blank=True, blank_text="Pilih Lokasi")
-  distance = IntegerField("Jarak", validators=[DataRequired()])
+  distance = IntegerField("Jarak", validators=[InputRequired()])
 
 class TourListForm(FlaskForm):
   name = StringField("Nama Objek Wisata", validators=[DataRequired(), Length(max=128)])
   tour_type = QuerySelectField("Jenis Wisata", validators=[DataRequired()], query_factory=lambda: TourType.query.order_by(TourType.name.asc()).all(), get_label="name", allow_blank=True, blank_text="Pilih Jenis Wisata")
-  ticket = IntegerField("Harga Tiket", validators=[DataRequired()])
+  ticket = IntegerField("Harga Tiket", validators=[InputRequired()])
   facility = QuerySelectField("Fasilitas", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=2).all(), get_label="name", allow_blank=True, blank_text="Pilih Fasilitas")
   infrastructure = QuerySelectField("Infrastruktur", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=4).all(), get_label="name", allow_blank=True, blank_text="Pilih Infrastruktur")
   transportation_access = QuerySelectField("Akses Transportasi", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=5).all(), get_label="name", allow_blank=True, blank_text="Pilih Akses Transportasi")

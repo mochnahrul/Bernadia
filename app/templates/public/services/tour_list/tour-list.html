@@ -34,10 +34,10 @@
       </div>
     </div>
     {% if datas.total > 0 %}
-    <div class="row justify-content-center align-items-center row-gap-4 overflow-hidden py-5">
+    <div class="row justify-content-start align-items-center row-gap-4 overflow-hidden py-5">
       {% for data in datas %}
       <div class="col-lg-4 d-flex align-self-stretch">
-        <div class="card shadow-sm rounded-3 w-full">
+        <div class="card shadow-sm rounded-3" style="width: 100% !important">
           <div class="ratio ratio-16x9 rounded-top-3 overflow-hidden">
             <img src="{{ url_for('static', filename='media/uploads/tour_list/' + data.image) }}" class="ratio-content card-img-top pe-none" style="object-fit: cover; transform: translate3d(0, 0, 1px)" alt="{{ data.name }}" />
           </div>
