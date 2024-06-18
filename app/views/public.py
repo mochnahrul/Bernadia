@@ -104,6 +104,7 @@ def delete_usage_help(id):
 @public_app.route("/layanan/data-sistem", methods=["GET", "POST"])
 @login_required
 def system_data():
+  check_admin()
   return render_template("public/services/system_data/system-data.html", title="Data Sistem - Bondowoso Tourism")
 
 # System Data - Criteria routes
@@ -111,6 +112,8 @@ def system_data():
 @public_app.route("/layanan/kriteria", methods=["GET", "POST"])
 @login_required
 def criteria():
+  check_admin()
+
   page = request.args.get("page", 1, type=int)
   datas = Criteria.query.order_by(Criteria.posted_date.desc()).paginate(page=page, per_page=5)
   return render_template("public/services/system_data/criteria.html", title="Kriteria - Bondowoso Tourism", datas=datas)
@@ -174,6 +177,8 @@ def delete_criteria(id):
 @public_app.route("/layanan/sub-kriteria", methods=["GET", "POST"])
 @login_required
 def sub_criteria():
+  check_admin()
+
   page = request.args.get("page", 1, type=int)
   datas = SubCriteria.query.order_by(SubCriteria.posted_date.desc()).paginate(page=page, per_page=5)
   return render_template("public/services/system_data/sub-criteria.html", title="Sub Kriteria - Bondowoso Tourism", datas=datas)
@@ -236,6 +241,8 @@ def delete_sub_criteria(id):
 @public_app.route("/layanan/titik-lokasi", methods=["GET", "POST"])
 @login_required
 def location_point():
+  check_admin()
+
   page = request.args.get("page", 1, type=int)
   datas = LocationPoint.query.order_by(LocationPoint.posted_date.desc()).paginate(page=page, per_page=5)
   return render_template("public/services/system_data/location-point.html", title="Titik Lokasi - Bondowoso Tourism", datas=datas)
@@ -301,6 +308,8 @@ def delete_location_point(id):
 @public_app.route("/layanan/jenis-wisata", methods=["GET", "POST"])
 @login_required
 def tour_type():
+  check_admin()
+
   page = request.args.get("page", 1, type=int)
   datas = TourType.query.order_by(TourType.posted_date.desc()).paginate(page=page, per_page=5)
   return render_template("public/services/system_data/tour-type.html", title="Jenis Wisata - Bondowoso Tourism", datas=datas)
