@@ -40,6 +40,12 @@ def usage_help():
   datas = UsageHelp.query.order_by(UsageHelp.posted_date.desc()).paginate(page=page, per_page=6)
   return render_template("public/services/usage_help/usage-help.html", title="Bantuan Penggunaan - Bondowoso Tourism", datas=datas)
 
+@public_app.route("/layanan/bantuan-penggunaan/<id>", methods=["GET", "POST"])
+@login_required
+def usage_help_detail(id):
+  data = UsageHelp.query.filter_by(id=id).first_or_404()
+  return render_template("public/services/usage_help/usage-help_detail.html", title=f"{data.title} - Bondowoso Tourism", data=data)
+
 @public_app.route("/layanan/bantuan-penggunaan/tambah", methods=["GET", "POST"])
 @login_required
 def create_usage_help():
@@ -49,9 +55,9 @@ def create_usage_help():
   if form.validate_on_submit():
     if form.image.data:
       image = save_resized_image(form.image.data, 1280, 720, "usage_help")
-      new_data = UsageHelp(title=form.title.data, description=form.description.data, image=image, user=current_user)
+      new_data = UsageHelp(title=form.title.data, description=form.description.data, image=image, content=form.body.data, user=current_user)
     else:
-      new_data = UsageHelp(title=form.title.data, description=form.description.data, user=current_user)
+      new_data = UsageHelp(title=form.title.data, description=form.description.data, content=form.body.data, user=current_user)
 
     db.session.add(new_data)
     db.session.commit()
@@ -75,6 +81,7 @@ def update_usage_help(id):
 
     data.title = form.title.data
     data.description = form.description.data
+    data.content = form.body.data
     data.user = current_user
 
     db.session.commit()
@@ -84,6 +91,7 @@ def update_usage_help(id):
   elif request.method == "GET":
     form.title.data = data.title
     form.description.data = data.description
+    form.body.data = data.content
 
   return render_template("public/services/usage_help/usage-help_form.html", title="Edit Bantuan Penggunaan - Bondowoso Tourism", form=form, operation="Edit")
 
@@ -403,9 +411,9 @@ def create_tour_list():
   if form.validate_on_submit():
     if form.image.data:
       image = save_resized_image(form.image.data, 1280, 720, "tour_list")
-      new_tour_list = TourList(name=form.name.data, tour_type=form.tour_type.data, ticket=form.ticket.data, facility=str(form.facility.data), infrastructure=str(form.infrastructure.data), transportation_access=str(form.transportation_access.data), description=form.description.data, image=image, user=current_user)
+      new_tour_list = TourList(name=form.name.data, tour_type=form.tour_type.data, ticket=form.ticket.data, facility=str(form.facility.data), infrastructure=str(form.infrastructure.data), transportation_access=str(form.transportation_access.data), description=form.description.data, image=image, content=form.body.data, user=current_user)
     else:
-      new_tour_list = TourList(name=form.name.data, tour_type=form.tour_type.data, ticket=form.ticket.data, facility=str(form.facility.data), infrastructure=str(form.infrastructure.data), transportation_access=str(form.transportation_access.data), description=form.description.data, user=current_user)
+      new_tour_list = TourList(name=form.name.data, tour_type=form.tour_type.data, ticket=form.ticket.data, facility=str(form.facility.data), infrastructure=str(form.infrastructure.data), transportation_access=str(form.transportation_access.data), description=form.description.data, content=form.body.data, user=current_user)
 
     db.session.add(new_tour_list)
     db.session.commit()
@@ -448,6 +456,7 @@ def update_tour_list(id):
     data.infrastructure = str(form.infrastructure.data)
     data.transportation_access = str(form.transportation_access.data)
     data.description = form.description.data
+    data.content = form.body.data
     data.user = current_user
 
     # update distances
@@ -471,6 +480,7 @@ def update_tour_list(id):
     form.infrastructure.data = infrastructure
     form.transportation_access.data = transportation_access
     form.description.data = data.description
+    form.body.data = data.content
 
     for i, distance in enumerate(distances_data):
       if i < len(form.distances.entries):

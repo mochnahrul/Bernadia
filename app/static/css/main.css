@@ -3,7 +3,8 @@ body {
 }
 
 .bg-hero {
-  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url(../media/uploads/home/hero.jpg);
+  background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    url(../media/uploads/home/hero.jpg);
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
@@ -12,8 +13,16 @@ body {
 
 .bg-gradient-hero {
   background-color: hsla(260, 0%, 100%, 1);
-  background-image: radial-gradient(at 68% 16%, hsla(252, 90%, 75%, 1) 0px, transparent 50%), radial-gradient(at 25% 64%, hsla(252, 88%, 62%, 1) 0px, transparent 50%), radial-gradient(at 13% 9%, hsla(242, 98%, 79%, 1) 0px, transparent 50%),
-    radial-gradient(at 93% 97%, hsla(257, 79%, 75%, 1) 0px, transparent 50%), radial-gradient(at 67% 22%, hsla(283, 81%, 68%, 1) 0px, transparent 50%), radial-gradient(at 75% 86%, hsla(350, 98%, 79%, 1) 0px, transparent 50%),
+  background-image: radial-gradient(
+      at 68% 16%,
+      hsla(252, 90%, 75%, 1) 0px,
+      transparent 50%
+    ),
+    radial-gradient(at 25% 64%, hsla(252, 88%, 62%, 1) 0px, transparent 50%),
+    radial-gradient(at 13% 9%, hsla(242, 98%, 79%, 1) 0px, transparent 50%),
+    radial-gradient(at 93% 97%, hsla(257, 79%, 75%, 1) 0px, transparent 50%),
+    radial-gradient(at 67% 22%, hsla(283, 81%, 68%, 1) 0px, transparent 50%),
+    radial-gradient(at 75% 86%, hsla(350, 98%, 79%, 1) 0px, transparent 50%),
     radial-gradient(at 6% 6%, hsla(359, 84%, 78%, 1) 0px, transparent 50%);
 }
 
@@ -84,6 +93,21 @@ body {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   overflow: hidden;
+}
+
+.cke_editable {
+  padding: 0.375rem 0.75rem;
+}
+
+.description {
+  p {
+    margin-bottom: 0 !important;
+    strong {
+      font-size: calc(1.275rem + 0.3vw);
+      --bs-text-opacity: 1;
+      color: var(--bs-emphasis-color);
+    }
+  }
 }
 
 /* Responsive Breakpoints */

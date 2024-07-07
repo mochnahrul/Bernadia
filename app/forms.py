@@ -1,6 +1,7 @@
 # third-party imports
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
+from flask_ckeditor import CKEditorField
 from wtforms import StringField, SelectField, EmailField, PasswordField, IntegerField, FloatField, TextAreaField, FieldList, FormField, SubmitField
 from wtforms.validators import DataRequired, InputRequired, Email, Length, EqualTo, ValidationError
 from wtforms_sqlalchemy.fields import QuerySelectField, QueryRadioField
@@ -69,8 +70,9 @@ class EditProfileForm(FlaskForm):
 
 class UsageHelpForm(FlaskForm):
   title = StringField("Judul", validators=[DataRequired(), Length(max=128)])
-  description = TextAreaField("Deskripsi", render_kw={"rows": 3})
+  description = StringField("Deskripsi", validators=[DataRequired()])
   image = FileField("Gambar", validators=[FileAllowed(["jpg", "jpeg", "png"], message="File yang Anda unggah tidak diperbolehkan. Silakan unggah file dalam format .jpg, .jpeg, atau .png.")])
+  body = CKEditorField("Konten", validators=[DataRequired()])
   submit = SubmitField("Selesai")
 
 class CriteriaForm(FlaskForm):
@@ -105,8 +107,9 @@ class TourListForm(FlaskForm):
   facility = QuerySelectField("Fasilitas", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=2).all(), get_label="name", allow_blank=True, blank_text="Pilih Fasilitas")
   infrastructure = QuerySelectField("Infrastruktur", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=4).all(), get_label="name", allow_blank=True, blank_text="Pilih Infrastruktur")
   transportation_access = QuerySelectField("Akses Transportasi", validators=[DataRequired()], query_factory=lambda: SubCriteria.query.filter_by(criteria_id=5).all(), get_label="name", allow_blank=True, blank_text="Pilih Akses Transportasi")
-  description = TextAreaField("Deskripsi Wisata", render_kw={"rows": 3})
+  description = StringField("Deskripsi Wisata", validators=[DataRequired()])
   image = FileField("Gambar", validators=[FileAllowed(["jpg", "jpeg", "png"], message="File yang Anda unggah tidak diperbolehkan. Silakan unggah file dalam format .jpg, .jpeg, atau .png.")])
+  body = CKEditorField("Konten", validators=[DataRequired()])
   distances = FieldList(FormField(DistanceForm))
   submit = SubmitField("Selesai")
 

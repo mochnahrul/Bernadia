@@ -1,12 +1,12 @@
-{% extends 'components/public/base.html' %} {% set active_page = 'system_data'
-%} {% block content %}
+{% extends 'components/public/base.html' %} {% set active_page = 'usage_help' %}
+{% block content %}
 <!-- Banner -->
 <div class="banner d-flex bg-hero h-20rem">
   <div class="container my-auto">
     <div class="row justify-content-center align-items-center">
       <div class="col-lg-10">
         <div class="text-white text-center">
-          <h2 class="fw-bold fs-3 title-clamp-2 mb-0">{{ data.name }}</h2>
+          <h2 class="fw-bold fs-3 title-clamp-2 mb-0">{{ data.title }}</h2>
         </div>
       </div>
     </div>
@@ -35,11 +35,11 @@
                 <a
                   class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
                   href="{{ url_for('public_app.tour_list') }}"
-                  >Daftar Wisata</a
+                  >Bantuan Penggunaan</a
                 >
               </li>
               <li class="breadcrumb-item active" aria-current="page">
-                {{ data.name }}
+                {{ data.title }}
               </li>
             </ol>
           </nav>
@@ -52,31 +52,18 @@
       <div class="col-lg-7">
         <div class="ratio ratio-16x9 text-center">
           <img
-            src="{{ url_for('static', filename='media/uploads/tour_list/' + data.image) }}"
+            src="{{ url_for('static', filename='media/uploads/usage_help/' + data.image) }}"
             class="ratio-content pe-none rounded-3"
             style="object-fit: cover; transform: translate3d(0, 0, 1px)"
-            alt="{{ data.name }}"
+            alt="{{ data.title }}"
           />
         </div>
       </div>
       <div class="col-lg-7">
-        <div class="d-flex flex-column row-gap-3">
-          <div class="d-flex flex-column row-gap-2">
-            <p class="fw-semibold fs-5 mb-0">Informasi:</p>
-            <div class="d-flex flex-column row-gap-1">
-              <p class="mb-0">Tiket: Rp. {{ data.ticket }}</p>
-              <p class="mb-0">Fasilitas: {{ facility.name }}</p>
-              <p class="mb-0">Infrastruktur: {{ infrastructure.name }}</p>
-              <p class="mb-0">
-                Akses Transportasi: {{ transportation_access.name }}
-              </p>
-            </div>
-          </div>
-          <div class="d-flex flex-column row-gap-2">
-            <p class="fw-semibold fs-5 mb-0">Deskripsi:</p>
-            <div class="description d-flex flex-column row-gap-1">
-              {{ data.content | safe }}
-            </div>
+        <div class="d-flex flex-column row-gap-2">
+          <p class="fw-semibold fs-5 mb-0">Deskripsi:</p>
+          <div class="description d-flex flex-column row-gap-1">
+            {{ data.content | safe }}
           </div>
         </div>
       </div>

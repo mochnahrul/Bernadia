@@ -1,4 +1,5 @@
-{% extends 'components/public/base.html' %} {% set active_page = 'usage_help' %} {% block content %}
+{% extends 'components/public/base.html' %} {% set active_page = 'usage_help' %}
+{% block content %}
 <!-- Banner -->
 <div class="banner d-flex bg-hero h-20rem">
   <div class="container my-auto">
@@ -20,41 +21,90 @@
       <div class="col-lg-10">
         <div class="d-flex flex-column row-gap-3">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb justify-content-center align-items-center mb-0">
-              <li class="breadcrumb-item"><a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ url_for('public_app.services') }}">Layanan</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Bantuan Penggunaan</li>
+            <ol
+              class="breadcrumb justify-content-center align-items-center mb-0"
+            >
+              <li class="breadcrumb-item">
+                <a
+                  class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
+                  href="{{ url_for('public_app.services') }}"
+                  >Layanan</a
+                >
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Bantuan Penggunaan
+              </li>
             </ol>
           </nav>
           {% if current_user.role == "admin" %}
           <div class="text-center">
-            <a class="btn btn-success rounded-5 py-1 px-3" href="{{ url_for('public_app.create_usage_help') }}" role="button">Tambah</a>
+            <a
+              class="btn btn-success rounded-5 py-1 px-3"
+              href="{{ url_for('public_app.create_usage_help') }}"
+              role="button"
+              >Tambah</a
+            >
           </div>
           {% endif %}
         </div>
       </div>
     </div>
     {% if datas.total > 0 %}
-    <div class="row justify-content-center align-items-center row-gap-4 overflow-hidden py-5">
+    <div
+      class="row justify-content-center align-items-center row-gap-4 overflow-hidden py-5"
+    >
       {% for data in datas %}
       <div class="col-lg-7">
         <div class="card shadow-sm rounded-3">
           <div class="row g-0">
             <div class="col-xl-4">
-              <div class="ratio ratio-16x9 ratio-lg-1x1 rounded-top-3 rounded-lg-start-3 overflow-hidden">
-                <img src="{{ url_for('static', filename='media/uploads/usage_help/' + data.image) }}" class="ratio-content pe-none" style="object-fit: cover; transform: translate3d(0, 0, 1px)" alt="{{ data.title }}" />
+              <div
+                class="ratio ratio-16x9 ratio-lg-1x1 rounded-top-3 rounded-lg-start-3 overflow-hidden"
+              >
+                <img
+                  src="{{ url_for('static', filename='media/uploads/usage_help/' + data.image) }}"
+                  class="ratio-content pe-none"
+                  style="object-fit: cover; transform: translate3d(0, 0, 1px)"
+                  alt="{{ data.title }}"
+                />
               </div>
             </div>
             <div class="col-xl-8">
-              <div class="card-body d-flex flex-column justify-content-between row-gap-3" style="height: 100% !important">
+              <div
+                class="card-body d-flex flex-column justify-content-between row-gap-3"
+                style="height: 100% !important"
+              >
                 <div class="d-flex flex-column row-gap-2">
-                  <h6 class="fw-semibold fs-5 text-body-emphasis text-clamp-2 mb-0">{{ data.title }}</h6>
+                  <h6
+                    class="fw-semibold fs-5 text-body-emphasis text-clamp-2 mb-0"
+                  >
+                    {{ data.title }}
+                  </h6>
                   <p class="small text-clamp-3 mb-0">{{ data.description }}</p>
                 </div>
                 <div class="d-flex flex-row justify-content-start column-gap-2">
                   {% if current_user.role == "admin" %}
-                  <a class="btn btn-danger rounded-5 py-1 px-3" href="#" role="button" data-bs-toggle="modal" data-bs-target="#deleteDataModal{{ data.id }}">Hapus</a>
-                  <a class="btn btn-primary rounded-5 py-1 px-3" href="{{ url_for('public_app.update_usage_help', id=data.id) }}" role="button">Edit</a>
+                  <a
+                    class="btn btn-danger rounded-5 py-1 px-3"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteDataModal{{ data.id }}"
+                    >Hapus</a
+                  >
+                  <a
+                    class="btn btn-primary rounded-5 py-1 px-3"
+                    href="{{ url_for('public_app.update_usage_help', id=data.id) }}"
+                    role="button"
+                    >Edit</a
+                  >
                   {% endif %}
+                  <a
+                    class="btn btn-dark rounded-5 py-1 px-3"
+                    href="{{ url_for('public_app.usage_help_detail', id=data.id) }}"
+                    role="button"
+                    >Lihat</a
+                  >
                 </div>
               </div>
             </div>
@@ -62,20 +112,47 @@
         </div>
       </div>
       <!-- Delete Modal -->
-      <div class="modal fade" id="deleteDataModal{{ data.id }}" tabindex="-1" aria-labelledby="deleteDataModalLabel{{ data.id }}" aria-hidden="true">
+      <div
+        class="modal fade"
+        id="deleteDataModal{{ data.id }}"
+        tabindex="-1"
+        aria-labelledby="deleteDataModalLabel{{ data.id }}"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="deleteDataModalLabel{{ data.id }}">Hapus Data</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h5 class="modal-title" id="deleteDataModalLabel{{ data.id }}">
+                Hapus Data
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <p class="mb-0">Apakah Anda yakin ingin menghapus data ini?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary rounded-5 py-1 px-3" data-bs-dismiss="modal">Batal</button>
-              <a href="{{ url_for('public_app.delete_usage_help', id=data.id) }}" class="text-decoration-none">
-                <button type="submit" class="btn btn-danger rounded-5 py-1 px-3">Hapus</button>
+              <button
+                type="button"
+                class="btn btn-secondary rounded-5 py-1 px-3"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <a
+                href="{{ url_for('public_app.delete_usage_help', id=data.id) }}"
+                class="text-decoration-none"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-danger rounded-5 py-1 px-3"
+                >
+                  Hapus
+                </button>
               </a>
             </div>
           </div>
@@ -88,13 +165,19 @@
       <div class="col-lg-12">
         <nav>
           <ul class="pagination justify-content-center align-items-center mb-0">
-            {% for page_num in datas.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %} {% if page_num %} {% if datas.page == page_num %}
+            {% for page_num in datas.iter_pages(left_edge=1, right_edge=1,
+            left_current=1, right_current=2) %} {% if page_num %} {% if
+            datas.page == page_num %}
             <li class="page-item active" aria-current="page">
               <span class="page-link">{{ page_num }}</span>
             </li>
             {% else %}
             <li class="page-item">
-              <a class="page-link" href="{{ url_for('public_app.usage_help', page=page_num) }}">{{ page_num }}</a>
+              <a
+                class="page-link"
+                href="{{ url_for('public_app.usage_help', page=page_num) }}"
+                >{{ page_num }}</a
+              >
             </li>
             {% endif %} {% else %}
             <li class="page-item">

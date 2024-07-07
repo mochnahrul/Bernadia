@@ -1,11 +1,14 @@
-{% extends 'components/public/base.html' %} {% set active_page = 'tour_list' %} {% block content %}
+{% extends 'components/public/base.html' %} {% set active_page = 'tour_list' %}
+{% block content %}
 <!-- Banner -->
 <div class="banner d-flex bg-hero h-20rem">
   <div class="container my-auto">
     <div class="row justify-content-center align-items-center">
       <div class="col-lg-10">
         <div class="text-white text-center">
-          <h2 class="fw-bold fs-3 title-clamp-2 mb-0">{{ operation }} Daftar Wisata</h2>
+          <h2 class="fw-bold fs-3 title-clamp-2 mb-0">
+            {{ operation }} Daftar Wisata
+          </h2>
         </div>
       </div>
     </div>
@@ -20,15 +23,36 @@
       <div class="col-lg-10">
         <div class="d-flex flex-column row-gap-3">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb justify-content-center align-items-center mb-0">
-              <li class="breadcrumb-item"><a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ url_for('public_app.services') }}">Layanan</a></li>
-              <li class="breadcrumb-item"><a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ url_for('public_app.tour_list') }}">Daftar Wisata</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{ operation }} Daftar Wisata</li>
+            <ol
+              class="breadcrumb justify-content-center align-items-center mb-0"
+            >
+              <li class="breadcrumb-item">
+                <a
+                  class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
+                  href="{{ url_for('public_app.services') }}"
+                  >Layanan</a
+                >
+              </li>
+              <li class="breadcrumb-item">
+                <a
+                  class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
+                  href="{{ url_for('public_app.tour_list') }}"
+                  >Daftar Wisata</a
+                >
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                {{ operation }} Daftar Wisata
+              </li>
             </ol>
           </nav>
           {% if current_user.role == "admin" %}
           <div class="text-center">
-            <a class="btn btn-success rounded-5 py-1 px-3" href="{{ url_for('public_app.create_tour_list') }}" role="button">Tambah</a>
+            <a
+              class="btn btn-success rounded-5 py-1 px-3"
+              href="{{ url_for('public_app.create_tour_list') }}"
+              role="button"
+              >Tambah</a
+            >
           </div>
           {% endif %}
         </div>
@@ -41,7 +65,8 @@
             <form enctype="multipart/form-data" method="POST">
               {{ form.hidden_tag() }}
               <div class="mb-3">
-                {{ form.name.label(class="form-label") }} {% if form.name.errors %} {{ form.name(class="form-control is-invalid") }}
+                {{ form.name.label(class="form-label") }} {% if form.name.errors
+                %} {{ form.name(class="form-control is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.name.errors %}
                   <span>{{ error }}</span>
@@ -50,7 +75,9 @@
                 {% else %} {{ form.name(class="form-control") }} {% endif %}
               </div>
               <div class="mb-3">
-                {{ form.tour_type.label(class="form-label") }} {% if form.tour_type.errors %} {{ form.tour_type(class="form-select is-invalid") }}
+                {{ form.tour_type.label(class="form-label") }} {% if
+                form.tour_type.errors %} {{ form.tour_type(class="form-select
+                is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.tour_type.errors %}
                   <span>{{ error }}</span>
@@ -62,32 +89,44 @@
                 <label class="form-label">Jarak ke Lokasi</label>
                 <div class="distance-fields d-flex flex-column row-gap-3">
                   {% for distance_form in form.distances %}
-                  <div class="d-flex flex-column flex-lg-row gap-2 border rounded p-3">
+                  <div
+                    class="d-flex flex-column flex-lg-row gap-2 border rounded p-3"
+                  >
                     {{ distance_form.hidden_tag() }}
                     <div class="d-flex flex-column w-100">
-                      {{ distance_form.location_point.label(class="form-label") }} {% if distance_form.location_point.errors %} {{ distance_form.location_point(class="form-select is-invalid") }}
+                      {{ distance_form.location_point.label(class="form-label")
+                      }} {% if distance_form.location_point.errors %} {{
+                      distance_form.location_point(class="form-select
+                      is-invalid") }}
                       <div class="invalid-feedback">
                         {% for error in distance_form.location_point.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                       </div>
-                      {% else %} {{ distance_form.location_point(class="form-select") }} {% endif %}
+                      {% else %} {{
+                      distance_form.location_point(class="form-select") }} {%
+                      endif %}
                     </div>
                     <div class="d-flex flex-column w-100">
-                      {{ distance_form.distance.label(class="form-label") }} {% if distance_form.distance.errors %} {{ distance_form.distance(class="form-control is-invalid") }}
+                      {{ distance_form.distance.label(class="form-label") }} {%
+                      if distance_form.distance.errors %} {{
+                      distance_form.distance(class="form-control is-invalid") }}
                       <div class="invalid-feedback">
                         {% for error in distance_form.distance.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                       </div>
-                      {% else %} {{ distance_form.distance(class="form-control") }} {% endif %}
+                      {% else %} {{ distance_form.distance(class="form-control")
+                      }} {% endif %}
                     </div>
                   </div>
                   {% endfor %}
                 </div>
               </div>
               <div class="mb-3">
-                {{ form.ticket.label(class="form-label") }} {% if form.ticket.errors %} {{ form.ticket(class="form-control is-invalid") }}
+                {{ form.ticket.label(class="form-label") }} {% if
+                form.ticket.errors %} {{ form.ticket(class="form-control
+                is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.ticket.errors %}
                   <span>{{ error }}</span>
@@ -96,7 +135,9 @@
                 {% else %} {{ form.ticket(class="form-control") }} {% endif %}
               </div>
               <div class="mb-3">
-                {{ form.facility.label(class="form-label") }} {% if form.facility.errors %} {{ form.facility(class="form-select is-invalid") }}
+                {{ form.facility.label(class="form-label") }} {% if
+                form.facility.errors %} {{ form.facility(class="form-select
+                is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.facility.errors %}
                   <span>{{ error }}</span>
@@ -105,34 +146,45 @@
                 {% else %} {{ form.facility(class="form-select") }} {% endif %}
               </div>
               <div class="mb-3">
-                {{ form.infrastructure.label(class="form-label") }} {% if form.infrastructure.errors %} {{ form.infrastructure(class="form-select is-invalid") }}
+                {{ form.infrastructure.label(class="form-label") }} {% if
+                form.infrastructure.errors %} {{
+                form.infrastructure(class="form-select is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.infrastructure.errors %}
                   <span>{{ error }}</span>
                   {% endfor %}
                 </div>
-                {% else %} {{ form.infrastructure(class="form-select") }} {% endif %}
+                {% else %} {{ form.infrastructure(class="form-select") }} {%
+                endif %}
               </div>
               <div class="mb-3">
-                {{ form.transportation_access.label(class="form-label") }} {% if form.transportation_access.errors %} {{ form.transportation_access(class="form-select is-invalid") }}
+                {{ form.transportation_access.label(class="form-label") }} {% if
+                form.transportation_access.errors %} {{
+                form.transportation_access(class="form-select is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.transportation_access.errors %}
                   <span>{{ error }}</span>
                   {% endfor %}
                 </div>
-                {% else %} {{ form.transportation_access(class="form-select") }} {% endif %}
+                {% else %} {{ form.transportation_access(class="form-select") }}
+                {% endif %}
               </div>
               <div class="mb-3">
-                {{ form.description.label(class="form-label") }} {% if form.description.errors %} {{ form.description(class="form-control is-invalid") }}
+                {{ form.description.label(class="form-label") }} {% if
+                form.description.errors %} {{
+                form.description(class="form-control is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.description.errors %}
                   <span>{{ error }}</span>
                   {% endfor %}
                 </div>
-                {% else %} {{ form.description(class="form-control") }} {% endif %}
+                {% else %} {{ form.description(class="form-control") }} {% endif
+                %}
               </div>
               <div class="mb-3">
-                {{ form.image.label(class="form-label") }} {% if form.image.errors %} {{ form.image(class="form-control is-invalid") }}
+                {{ form.image.label(class="form-label") }} {% if
+                form.image.errors %} {{ form.image(class="form-control
+                is-invalid") }}
                 <div class="invalid-feedback">
                   {% for error in form.image.errors %}
                   <span>{{ error }}</span>
@@ -140,12 +192,30 @@
                 </div>
                 {% else %} {{ form.image(class="form-control") }} {% endif %}
               </div>
-
-              <div class="d-flex flex-row justify-content-end align-items-center column-gap-2">
-                <a class="btn btn-secondary rounded-5 py-1 px-3" href="{{ url_for('public_app.tour_list') }}" role="button">Batal</a>
+              <div class="mb-3">
+                {{ form.body.label(class="form-label") }} {% if form.body.errors
+                %} {{ form.body(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.body.errors %}
+                  <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+                {% else %} {{ form.body(class="form-control") }} {% endif %}
+              </div>
+              <div
+                class="d-flex flex-row justify-content-end align-items-center column-gap-2"
+              >
+                <a
+                  class="btn btn-secondary rounded-5 py-1 px-3"
+                  href="{{ url_for('public_app.tour_list') }}"
+                  role="button"
+                  >Batal</a
+                >
                 {{ form.submit(class="btn btn-success rounded-5 py-1 px-3") }}
               </div>
             </form>
+            {{ ckeditor.load(pkg_type='basic') }} {{
+            ckeditor.config(name='body', height=300) }}
           </div>
         </div>
       </div>
@@ -153,4 +223,9 @@
   </div>
 </div>
 <!-- End of Page Wrapper -->
+{% endblock %} {% block javascript %}
+<script>
+  CKEDITOR.config.contentsCss =
+    "{{ url_for('static', filename='css/main.css') }}";
+</script>
 {% endblock %}

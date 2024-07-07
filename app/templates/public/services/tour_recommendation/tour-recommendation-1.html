@@ -1,4 +1,5 @@
-{% extends 'components/public/base.html' %} {% set active_page = 'tour_recommendation' %} {% block content %}
+{% extends 'components/public/base.html' %} {% set active_page =
+'tour_recommendation' %} {% block content %}
 <!-- Banner -->
 <div class="banner d-flex bg-hero h-20rem">
   <div class="container my-auto">
@@ -20,9 +21,19 @@
       <div class="col-lg-10">
         <div class="d-flex flex-column row-gap-3">
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb justify-content-center align-items-center mb-0">
-              <li class="breadcrumb-item"><a class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover" href="{{ url_for('public_app.services') }}">Layanan</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Rekomendasi Wisata</li>
+            <ol
+              class="breadcrumb justify-content-center align-items-center mb-0"
+            >
+              <li class="breadcrumb-item">
+                <a
+                  class="link-dark link-offset-2 link-underline-opacity-0 link-underline-opacity-100-hover"
+                  href="{{ url_for('public_app.services') }}"
+                  >Layanan</a
+                >
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Rekomendasi Wisata
+              </li>
             </ol>
           </nav>
         </div>
@@ -33,11 +44,18 @@
         <form method="POST">
           {{ form.hidden_tag() }}
           <div class="mb-4">
-            <label class="form-label mb-3">1. Titik lokasi yang akan Anda gunakan untuk menghitung jarak ke objek wisata.</label>
+            <label class="form-label mb-3"
+              >1. Titik lokasi yang akan Anda gunakan untuk menghitung jarak ke
+              objek wisata.</label
+            >
             <div class="d-flex flex-column row-gap-2">
               {% for subfield in form.location_point %}
               <label class="pointer border bg-body-secondary rounded p-2">
-                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+                <div class="form-check mb-0">
+                  {{ subfield(class="form-check-input pointer", id=subfield.id)
+                  }} {{ subfield.label(class="form-check-label pointer
+                  unselectable") }}
+                </div>
               </label>
               {% endfor %}
             </div>
@@ -50,11 +68,18 @@
             {% endif %}
           </div>
           <div class="mb-4">
-            <label class="form-label mb-3">2. Jenis wisata yang Anda inginkan untuk melakukan perjalanan pariwisata.</label>
+            <label class="form-label mb-3"
+              >2. Jenis wisata yang Anda inginkan untuk melakukan perjalanan
+              pariwisata.</label
+            >
             <div class="d-flex flex-column row-gap-2">
               {% for subfield in form.tour_type %}
               <label class="pointer border bg-body-secondary rounded p-2">
-                <div class="form-check mb-0">{{ subfield(class="form-check-input pointer", id=subfield.id) }} {{ subfield.label(class="form-check-label pointer unselectable") }}</div>
+                <div class="form-check mb-0">
+                  {{ subfield(class="form-check-input pointer", id=subfield.id)
+                  }} {{ subfield.label(class="form-check-label pointer
+                  unselectable") }}
+                </div>
               </label>
               {% endfor %}
             </div>
@@ -66,7 +91,9 @@
             </div>
             {% endif %}
           </div>
-          <div class="d-grid">{{ form.submit(class="btn btn-dark rounded-5") }}</div>
+          <div class="d-grid">
+            {{ form.submit(class="btn btn-dark rounded-5") }}
+          </div>
         </form>
       </div>
     </div>

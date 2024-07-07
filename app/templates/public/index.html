@@ -1,21 +1,37 @@
-{% extends 'components/public/base.html' %} {% set active_page = 'home' %} {% block content %}
+{% extends 'components/public/base.html' %} {% set active_page = 'home' %} {%
+block content %}
 <!-- Hero -->
 <div class="hero d-flex bg-hero min-vh-100">
   <div class="container my-auto">
     <div class="row justify-content-center align-items-center">
       <div class="col-lg-8">
         <div class="d-flex flex-column row-gap-3 text-center">
-          <h2 class="fw-bold text-white fs-1 mb-0">Website Pemilihan Ojek Wisata di Kabupaten Bondowoso</h2>
+          <h2 class="fw-bold text-white fs-1 mb-0">
+            Website Pemilihan Ojek Wisata di Kabupaten Bondowoso
+          </h2>
           <p class="fw-light text-white mb-0">
-            Kabupaten Bondowoso memiliki banyak objek wisata yang mempesona dan digemari oleh banyak orang. Adanya website ini yaitu untuk mempermudah Anda dalam menentukan objek wisata di Kabupaten Bondowoso sesuai yang diinginkan.
+            Kabupaten Bondowoso memiliki banyak objek wisata yang mempesona dan
+            digemari oleh banyak orang. Adanya website ini yaitu untuk
+            mempermudah Anda dalam menentukan objek wisata di Kabupaten
+            Bondowoso sesuai yang diinginkan.
           </p>
           {% if current_user.is_authenticated %}
           <div class="d-flex justify-content-center align-item-center">
-            <a class="btn btn-light rounded-5 py-1 px-3" href="{{ url_for('public_app.services') }}" role="button">Memulai</a>
+            <a
+              class="btn btn-light rounded-5 py-1 px-3"
+              href="{{ url_for('public_app.services') }}"
+              role="button"
+              >Memulai</a
+            >
           </div>
           {% else %}
           <div class="d-flex justify-content-center align-item-center">
-            <a class="btn btn-light rounded-5 py-1 px-3" href="{{ url_for('control_panel_app.login') }}" role="button">Memulai</a>
+            <a
+              class="btn btn-light rounded-5 py-1 px-3"
+              href="{{ url_for('control_panel_app.login') }}"
+              role="button"
+              >Memulai</a
+            >
           </div>
           {% endif %}
         </div>
