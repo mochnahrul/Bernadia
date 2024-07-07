@@ -36,7 +36,4 @@ def create_app(config=DevelopmentConfig):
   app.register_blueprint(control_panel_app)
   app.register_blueprint(public_app)
 
-  with app.app_context():
-    db.create_all()
-
   return app
